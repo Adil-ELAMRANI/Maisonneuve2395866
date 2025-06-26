@@ -13,7 +13,11 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('city')->paginate(10);
+        // Option : afficher seulement les étudiants de l'utilisateur connecté
+        $students = Student::with('city')
+            ->where('user_id', auth()->id())
+            ->paginate(10);
+
         return view('students.index', compact('students'));
     }
 
@@ -40,7 +44,15 @@ class StudentController extends Controller
             'birth_date' => 'required|date',
         ]);
 
-        Student::create($request->only('name', 'city_id', 'address', 'phone', 'email', 'birth_date'));
+        Student::create([
+            'name' => $request->name,
+            'city_id' => $request->city_id,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'birth_date' => $request->birth_date,
+            'user_id' => auth()->id(), // Lien avec l'utilisateur connecté
+        ]);
 
         return redirect()->route('students.index')->with('success', 'Étudiant ajouté avec succès.');
     }
@@ -70,6 +82,10 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'city_id' => 'required|exists:cities,id',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'birth_date' => 'required|date',
         ]);
 
         $student->update($request->only('name', 'city_id', 'address', 'phone', 'email', 'birth_date'));

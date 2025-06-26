@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     /**
+     * Retourne les articles rédigés par l'utilisateur.
+     */
+    public function articles()
+    {
+        return $this->hasMany(\App\Models\Article::class, 'user_id');
+    }
 }

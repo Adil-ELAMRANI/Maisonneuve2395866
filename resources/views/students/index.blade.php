@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Liste des étudiants')
-@section('header', 'Étudiants')
+@section('title', __('lang.Liste des étudiants'))
+@section('header', __('lang.Étudiants'))
 
 @section('content')
 <div class="container py-4">
@@ -11,15 +11,15 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h1 class="h4 mb-1 text-primary">
-                        <i class="bi bi-people-fill me-2"></i>Gestion des étudiants
+                        <i class="bi bi-people-fill me-2"></i>{{ __('lang.Gestion des étudiants') }}
                     </h1>
-                    <p class="text-muted small mb-0">Liste des étudiants enregistrés</p>
+                    <p class="text-muted small mb-0">{{ __('lang.Liste des étudiants enregistrés') }}</p>
                     <p class="text-primary text-opacity-75 small mb-0">
-                        {{ $students->total() }} étudiant(s) enregistré(s)
+                        {{ trans_choice('lang.étudiant(s) enregistré(s)', $students->total(), ['count' => $students->total()]) }}
                     </p>
                 </div>
                 <a href="{{ route('students.create') }}" class="btn btn-success btn-sm">
-                    <i class="bi bi-plus-lg me-1"></i> Ajouter
+                    <i class="bi bi-plus-lg me-1"></i> {{ __('lang.Ajouter') }}
                 </a>
             </div>
         </div>
@@ -30,9 +30,9 @@
                 <table class="table table-hover mb-0 w-100">
                     <thead class="table-light">
                         <tr>
-                            <th class="w-40">Nom</th>
-                            <th class="w-30">Ville</th>
-                            <th class="w-30 text-end">Actions</th>
+                            <th class="w-40">{{ __('lang.Nom') }}</th>
+                            <th class="w-30">{{ __('lang.Ville') }}</th>
+                            <th class="w-30 text-end">{{ __('lang.Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,19 +48,19 @@
                             </td>
                             <td class="align-middle">
                                 <span class="badge bg-primary bg-opacity-10 text-primary">
-                                    {{ $student->city->name ?? 'Non spécifié' }}
+                                    {{ $student->city->name ?? __('lang.Non spécifié') }}
                                 </span>
                             </td>
                             <td class="align-middle">
                                 <div class="d-flex justify-content-end gap-1">
                                     <a href="{{ route('students.show', $student) }}"
                                         class="btn btn-outline-info btn-sm px-2"
-                                        title="Détails">
+                                        title="{{ __('lang.Détails') }}">
                                         <i class="bi bi-eye"></i>
                                     </a>
                                     <a href="{{ route('students.edit', $student) }}"
                                         class="btn btn-outline-warning btn-sm px-2"
-                                        title="Modifier">
+                                        title="{{ __('lang.Modifier') }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                     <form action="{{ route('students.destroy', $student) }}"
@@ -70,8 +70,8 @@
                                         @method('DELETE')
                                         <button type="submit"
                                             class="btn btn-outline-danger btn-sm px-2"
-                                            onclick="return confirm('Confirmer la suppression ?')"
-                                            title="Supprimer">
+                                            onclick="return confirm('{{ __('lang.Confirmer la suppression ?') }}')"
+                                            title="{{ __('lang.Supprimer') }}">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
@@ -82,7 +82,7 @@
                         <tr>
                             <td colspan="3" class="text-center py-4 text-muted">
                                 <i class="bi bi-database-exclamation fs-4"></i>
-                                <p class="mb-0">Aucun étudiant enregistré</p>
+                                <p class="mb-0">{{ __('lang.Aucun étudiant enregistré') }}</p>
                             </td>
                         </tr>
                         @endforelse

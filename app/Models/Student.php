@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\City;
+use App\Models\User;
 
 class Student extends Model
 {
@@ -16,6 +17,7 @@ class Student extends Model
         'email',
         'birth_date',
         'city_id',
+        'user_id',
     ];
 
     // Définition de la relation vers la ville
@@ -23,4 +25,14 @@ class Student extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    //public function student()
+    //{
+    //    return $this->hasOne(Student::class);
+    //}
 }

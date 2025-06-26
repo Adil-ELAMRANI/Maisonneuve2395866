@@ -1,0 +1,1 @@
+SELECT * FROM maisonneuve_db.students;
